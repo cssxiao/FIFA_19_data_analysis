@@ -1,0 +1,176 @@
+---
+title: 'FIFA 19 Player Data Analysis'
+author: "STAT 420, Summer 2020, Shuo Yan, Chutong Xiao, Connor Ng"
+date: ''
+output:
+  html_document: 
+    theme: readable
+    toc: yes  
+  pdf_document: default
+urlcolor: cyan
+---
+
+***
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
+options(scipen = 1, digits = 4, width = 80)
+library(knitr)
+opts_chunk$set(cache = TRUE, autodep = TRUE)
+```
+
+```{r}
+birthday = 19980327
+set.seed(birthday)
+```
+
+## Introduction
+
+Everyone of us can list our favorite football players; however, we as amateur audiences seldom know why some football players are so famous and their transfer values are so high. Hopefully, through this study we will be able to understand the standard of player evaluation. Are certain traits in football players more beneficial than others? Is pure physical ability enough to be thought to be as good as Lionel Messi or Cristiano Ronaldo or is there something more?
+
+In this study, we will use the `FIFA_19.csv` dataset to explore the relationship between the overall ratings and other attributes of the players. We aim the find the best model that help determine the rating of a palyer based on the existing data.
+
+The variables in the dataset are:
+
+- `ID` 
+- `Name` - Fullname of the football player
+- `Age` - in years
+- `Photo` - Link to the profile photo 
+- `Nationality` 
+- `Flag` - Link to the national flag photo 
+- `Overall` - The overall rating, integer
+- `Potential` - The potential rating, integer
+- `Club`
+- `Club.logo` - Link to the Logo image
+
+- `Value` - in M EUR
+- `Wage` - in K EUR
+- `Release.Cause` - M EUR
+
+- `Special` - 
+- `Preferred.Foot` - right or left
+- `International.Reputation` - 
+- `Weak.Foot` - 
+- `Skill.Moves` -
+- `Work.Rate` - 
+- `Body.Type` - Lean, normal or stocky
+- `Real.Face` - Whether the player has a real face (Yes or No)
+- `Position` 
+- `Jersey.Number` - Integer that identify the position
+- `Joined` - The year when the player joined FIFA
+- `Contract.Valid.Until` - Contract end-dates in years
+- `Height` - in feet
+- `Weight` - in lbs
+- `LS` - Left Striker
+- `ST` - Striker
+- `RS` - Right Striker
+- `LW` - Left Wing
+- `RW` - Right Wing
+- `LF` - Left Forward
+- `CF` - Centre Forward
+- `RF` - Right Forward
+- `LAM` - Left Attacking Midfielder
+- `CAM` - Central Attacking Midfielder
+- `RAM` - Right Attacking Midfielder
+- `LM` - Left Midfielder
+- `RM` - Right Midfielder
+- `LDM` - Left Defensive Midfielder
+- `CDM` - Central Defensive Midfielder
+- `RDM` - Right Defensive Midfielder
+- `LB` - Left Back (##to delete## notice: we do not have right back(RB) in the dataset)
+- `LCM` - Left Centre Midfielder
+- `CM` - Central Midfielder
+- `RCM` - Right Centre Midfielder
+- `LWB` - Left Wing Back
+- `RWB` - Right Wing Back
+
+- Attacking: `Crossing`, `Finishing`, `HeadingAccuracy`, `ShortPassing`, `Volleys`
+
+- Skill: `Dribbling`, `Curve`, `FKAccuracy`, `LongPassing`, `BallControl`
+
+- Movement: `Acceleration`, `SprintSpeed`, `Agility`, `Reactions`, `Balance`
+
+- Power: `ShotPower`, `Jumping`, `Stamina`, `Strength`, `LongShots`
+
+- Mentality: `Aggression`, `Interceptions`, `Positioning`, `Vision`, `Penalties`, `Composure`                 
+- Defending: `Marking`, `StandingTackle`, `SlidingTackle`
+
+- GoalKeeping: `GKDiving`, `GKHandling`, `GKKicking`, `GKPositioning`,`GKReflexes`
+
+
+
+```{r}
+FIFA_19 = read.csv("FIFA_19.csv")
+```
+
+
+## Methods
+
+### Data Preprocessing
+
+
+### Multiple Linear Regression on Physical Features
+
+Investigate the relationship between physical fitness of the players and their overall ratings.
+
+We chose the following features as the one that represent physical features:
+
+- Age
+
+- Height
+
+- Weight
+
+```{r}
+body_model = lm(Overall ~ Age + Height + Weight, data = FIFA_19)
+#summary(body_model)
+```
+
+### Multiple Linear Regression on Attack 
+```{r}
+attack_model = lm(Overall ~ Crossing + Finishing + HeadingAccuracy + ShortPassing + Volleys, data = FIFA_19)
+summary(attack_model)
+```
+
+### Multiple Linear Regression on Skill
+```{r}
+skill_model = lm(Overall ~ Dribbling + Curve + FKAccuracy + LongPassing + BallControl, data = FIFA_19)
+summary(skill_model)
+```
+
+### Multiple Linear Regression on Movement
+```{r}
+movement_model = lm(Overall ~ Acceleration + SprintSpeed + Agility + Reactions + Balance, data = FIFA_19)
+summary(movement_model)
+```
+
+### Multiple Linear Regression on Power
+```{r}
+power_model = lm(Overall ~ ShotPower + Jumping + Stamina + Strength + LongShots, data = FIFA_19)
+summary(power_model)
+```
+
+### Multiple Linear Regression on Mentality
+```{r}
+mentality_model = lm(Overall ~ Aggression + Interceptions + Positioning + Vision + Penalties + Composure, data = FIFA_19)
+summary(mentality_model)
+```
+
+### Multiple Linear Regression on Denfending
+```{r}
+defending_model = lm(Overall ~ Marking + StandingTackle + SlidingTackle, data = FIFA_19)
+summary(defending_model)
+```
+
+### Multiple Linear Regression on GoalKeeping
+```{r}
+goal_keeping_model = lm(Overall ~ GKDiving + GKHandling + GKKicking + GKPositioning + GKReflexes, data = FIFA_19)
+summary(goal_keeping_model)
+```
+
+## Results
+
+## Discussion
+
+
+## Appendix
+
